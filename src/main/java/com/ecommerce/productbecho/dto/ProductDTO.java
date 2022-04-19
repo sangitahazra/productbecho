@@ -1,17 +1,20 @@
-package form;
+package com.ecommerce.productbecho.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
-public class Product {
+public class ProductDTO {
+
     private String code;
 
     private String description;
 
     private String name;
 
+    private String image;
+
     private Double price;
+
 }

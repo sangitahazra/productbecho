@@ -30,6 +30,9 @@ public class VariantProduct implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "price")
+    private Double price;
+
     @Lob
     @Column(name = "image")
     private byte[] image;

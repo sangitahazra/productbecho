@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Product Becho</title>
+</head>
+<body>
+<div class="row">
+    <div class="col-sm-3 my-2 d-flex align-content-stretch flex-wrap" th:each="product : ${products}">
+        <div class="card">
+            <img th:src="*{'data:image/png;base64,'+product.image}" alt=""/>
+            <div class="card-body">
+                <h5 class="card-title" th:text="${product.name}">Product name</h5>
+                <p class="card-text" th:text="${product.description}">Product summary</p>
+                <p class="card-text" th:text="${product.price}">Product cost</p>
+                <p class="card-text" th:text="${product.code}">Product summary</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
