@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Product Becho</title>
+</head>
+<body>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<span th:if="${uploaded}"><p>Product uploaded </p></span>
+<span th:unless="${uploaded}">
+    <form action="#" th:action="@{/backoffice/add-product}" th:object="${product}" enctype="multipart/form-data" method="post">
+        <p>Product Code: <input type="text" th:field="*{code}" /></p>
+        <p>Description: <input type="text" th:field="*{description}" /></p>
+        <p>Name: <input type="text" th:field="*{name}" /></p>
+        <p>Image: <input type="file" th:name="imageFile" /></p>
+        <p><input type="submit" value="Submit" /></p>
+    </form>
+</span>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>
