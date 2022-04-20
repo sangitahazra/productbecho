@@ -8,6 +8,8 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -17,16 +19,172 @@
 CREATE DATABASE IF NOT EXISTS `product_becho` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `product_becho`;
 
+-- Dumping structure for table product_becho.abstract_order
+CREATE TABLE IF NOT EXISTS `abstract_order` (
+  `pk` int NOT NULL,
+  `total_amount` double DEFAULT NULL,
+  PRIMARY KEY (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.abstract_order: ~0 rows (approximately)
+DELETE FROM `abstract_order`;
+
+-- Dumping structure for table product_becho.abstract_order_address
+CREATE TABLE IF NOT EXISTS `abstract_order_address` (
+  `pk` int NOT NULL,
+  `abstract_order_pk` int NOT NULL,
+  `address_pk` int NOT NULL,
+  PRIMARY KEY (`pk`),
+  KEY `FK2_abstract_order` (`abstract_order_pk`),
+  KEY `FK__address` (`address_pk`),
+  CONSTRAINT `FK2_abstract_order` FOREIGN KEY (`abstract_order_pk`) REFERENCES `abstract_order` (`pk`),
+  CONSTRAINT `FK__address` FOREIGN KEY (`address_pk`) REFERENCES `address` (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.abstract_order_address: ~0 rows (approximately)
+DELETE FROM `abstract_order_address`;
+
+-- Dumping structure for table product_becho.abstract_order_entry
+CREATE TABLE IF NOT EXISTS `abstract_order_entry` (
+  `pk` int NOT NULL,
+  `quantity` int NOT NULL,
+  PRIMARY KEY (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.abstract_order_entry: ~0 rows (approximately)
+DELETE FROM `abstract_order_entry`;
+
+-- Dumping structure for table product_becho.abstract_order_entry_variant_product
+CREATE TABLE IF NOT EXISTS `abstract_order_entry_variant_product` (
+  `pk` int NOT NULL,
+  `aoe_pk` int NOT NULL,
+  `vp_pk` int NOT NULL,
+  PRIMARY KEY (`pk`),
+  KEY `FK__abstract_order_entry` (`aoe_pk`),
+  KEY `FK__variant_product` (`vp_pk`),
+  CONSTRAINT `FK__abstract_order_entry` FOREIGN KEY (`aoe_pk`) REFERENCES `abstract_order_entry` (`pk`),
+  CONSTRAINT `FK__variant_product` FOREIGN KEY (`vp_pk`) REFERENCES `variant_product` (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.abstract_order_entry_variant_product: ~0 rows (approximately)
+DELETE FROM `abstract_order_entry_variant_product`;
+
+-- Dumping structure for table product_becho.abstract_order_to_abstract_entry
+CREATE TABLE IF NOT EXISTS `abstract_order_to_abstract_entry` (
+  `pk` int NOT NULL,
+  `abstract_order_pk` int NOT NULL,
+  `ae_pk` int NOT NULL,
+  PRIMARY KEY (`pk`),
+  KEY `FK_cart_to_cart_entry` (`ae_pk`) USING BTREE,
+  KEY `FK__cart` (`abstract_order_pk`) USING BTREE,
+  CONSTRAINT `FK__abstract_order` FOREIGN KEY (`abstract_order_pk`) REFERENCES `abstract_order` (`pk`),
+  CONSTRAINT `FK_ao_to_ae_entry` FOREIGN KEY (`ae_pk`) REFERENCES `abstract_order_entry` (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.abstract_order_to_abstract_entry: ~0 rows (approximately)
+DELETE FROM `abstract_order_to_abstract_entry`;
+
+-- Dumping structure for table product_becho.abstract_order_user
+CREATE TABLE IF NOT EXISTS `abstract_order_user` (
+  `pk` int NOT NULL,
+  `abstract_order_pk` int NOT NULL,
+  `user_pk` int NOT NULL,
+  PRIMARY KEY (`pk`),
+  KEY `FK3__abstract_order` (`abstract_order_pk`),
+  KEY `FK__user` (`user_pk`),
+  CONSTRAINT `FK3__abstract_order` FOREIGN KEY (`abstract_order_pk`) REFERENCES `abstract_order` (`pk`),
+  CONSTRAINT `FK__user` FOREIGN KEY (`user_pk`) REFERENCES `user` (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.abstract_order_user: ~0 rows (approximately)
+DELETE FROM `abstract_order_user`;
+
+-- Dumping structure for table product_becho.address
+CREATE TABLE IF NOT EXISTS `address` (
+  `pk` int NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `line1` varchar(50) NOT NULL,
+  `line2` varchar(50) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `state` varchar(50) NOT NULL,
+  `zip` varchar(50) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  PRIMARY KEY (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.address: ~0 rows (approximately)
+DELETE FROM `address`;
+
+-- Dumping structure for table product_becho.cart
+CREATE TABLE IF NOT EXISTS `cart` (
+  `pk` int NOT NULL,
+  `code` varchar(50) NOT NULL,
+  PRIMARY KEY (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.cart: ~0 rows (approximately)
+DELETE FROM `cart`;
+
+-- Dumping structure for table product_becho.cart_abstract_order
+CREATE TABLE IF NOT EXISTS `cart_abstract_order` (
+  `pk` int NOT NULL,
+  `cart_pk` int NOT NULL,
+  `abstract_order_pk` int NOT NULL,
+  PRIMARY KEY (`pk`),
+  KEY `FK__cart` (`cart_pk`),
+  KEY `FK4__abstract_order` (`abstract_order_pk`),
+  CONSTRAINT `FK4__abstract_order` FOREIGN KEY (`abstract_order_pk`) REFERENCES `abstract_order` (`pk`),
+  CONSTRAINT `FK__cart` FOREIGN KEY (`cart_pk`) REFERENCES `cart` (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.cart_abstract_order: ~0 rows (approximately)
+DELETE FROM `cart_abstract_order`;
+
 -- Dumping structure for table product_becho.hibernate_sequence
 CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
   `next_val` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table product_becho.hibernate_sequence: ~1 rows (approximately)
-/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
+-- Dumping data for table product_becho.hibernate_sequence: ~0 rows (approximately)
+DELETE FROM `hibernate_sequence`;
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-	(14);
-/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
+	(12);
+
+-- Dumping structure for table product_becho.order
+CREATE TABLE IF NOT EXISTS `order` (
+  `pk` int NOT NULL,
+  `code` varchar(50) NOT NULL,
+  PRIMARY KEY (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.order: ~0 rows (approximately)
+DELETE FROM `order`;
+
+-- Dumping structure for table product_becho.order_absract_order
+CREATE TABLE IF NOT EXISTS `order_absract_order` (
+  `pk` int NOT NULL,
+  `order_pk` int NOT NULL,
+  `abstract_order_pk` int NOT NULL,
+  PRIMARY KEY (`pk`),
+  KEY `FK__order` (`order_pk`),
+  KEY `FK5__abstract_order` (`abstract_order_pk`),
+  CONSTRAINT `FK5__abstract_order` FOREIGN KEY (`abstract_order_pk`) REFERENCES `abstract_order` (`pk`),
+  CONSTRAINT `FK__order` FOREIGN KEY (`order_pk`) REFERENCES `order` (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.order_absract_order: ~0 rows (approximately)
+DELETE FROM `order_absract_order`;
+
+-- Dumping structure for table product_becho.stock
+CREATE TABLE IF NOT EXISTS `stock` (
+  `pk` int NOT NULL,
+  `warehouse_code` varchar(50) NOT NULL DEFAULT '',
+  `quantity` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.stock: ~0 rows (approximately)
+DELETE FROM `stock`;
 
 -- Dumping structure for table product_becho.user
 CREATE TABLE IF NOT EXISTS `user` (
@@ -34,15 +192,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `role` varchar(50) NOT NULL DEFAULT '',
   `password` varchar(50) NOT NULL DEFAULT '',
+  `phone` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`pk`),
   UNIQUE KEY `id` (`username`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table product_becho.user: ~1 rows (approximately)
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`pk`, `username`, `role`, `password`) VALUES
-	(1, 'abhirup', 'ADMIN', '1234');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+-- Dumping data for table product_becho.user: ~0 rows (approximately)
+DELETE FROM `user`;
+INSERT INTO `user` (`pk`, `username`, `role`, `password`, `phone`) VALUES
+	(1, 'abhirup', 'ADMIN', '1234', NULL);
 
 -- Dumping structure for table product_becho.variant_product
 CREATE TABLE IF NOT EXISTS `variant_product` (
@@ -57,12 +215,24 @@ CREATE TABLE IF NOT EXISTS `variant_product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table product_becho.variant_product: ~0 rows (approximately)
-/*!40000 ALTER TABLE `variant_product` DISABLE KEYS */;
-INSERT INTO `variant_product` (`pk`, `code`, `description`, `image`, `name`, `price`) VALUES
-	(12, 'MICROTEKINVERTER', 'Microtek Inverter 950VA', _binary 0xffd8ffe000104a46494600010100000100010000ffdb008400090607100f0f0f10100f10100f0f100f100f0f101010100f0f0f1511161815151513181d2820181a251b1515213121252a2b2e2f2e171f3338333839342d2e2d010a0a0a0e0d0e150f0f1a2b1d151d372b2b372d2d2d2d2d2d2b2f2e372d302d2b2d2b2d2d2b2b382b2b2b372e2d302d2d2b2b2d37352d2b2b2b372d372d2b302bffc000110800e100e103012200021101031101ffc4001c0001000203010101000000000000000000000105020304070608ffc400471000020102020507090406090500000000000102031104210512314151133261718191b10722425272a1c1d1f0061482b323436274c2f11524335383a2b2e1e22544637392ffc40017010101010100000000000000000000000000010203ffc4001b11010101010100030000000000000000000001111202213141ffda000c03010002110311003f00f71000020900402401009004024800480000000000000000000000000000000000000001048000000000000020900000000000000000000000000000000000000000041241200000000000000000000000000000000000000000000000000000000041241200000000000000000010e4b8a317563eb2ef40660d6ebc3d68f7a3178987ac80dc0d0f194fd6f733178ea7c5f7303a41c8f4843f6bb8c5e91870977203b41c2f492f565ee33a5a420f6de2fa767781d6088c93cd66b8a24000000000000000008397158e54e4a2d66d5d3bd96dd87514da7179f0f65f88a3ade907ea2ef21e3a7c23ef2b6855b64f671de8ea5de8ce8dcf193e8ee23ef3538fb9186a9361a25d69faccc5ce5eb3ef26c4d80c2ef8bef1abd26cb748d5441ab506a1b6c83406ad443511b2c2c06bd52354cec1a28c354c754d9621a035b462e26db18d80c21271e6b6babe47552d2325ce4a5d2b2673b4434345ad2c6c25becf84b23a0a07133a55270e6b6970dabb99745e02b69e916b9f0ed8fc99d747174e7cd92bf0793ee6346f00140000414da794b94a4d5b5356a292b79dad78ead9f0e777a2e8aad36b3a7f8be04a2ba08df4a6d7c8d7146c51323aa9c93d86470ce9caf1945d9c5e7d29dae7651a97767b765c05c93a05fa7dec0d167c1f732755f06456c5460e09dfcf9c60acb7be3d0746aafa480d167f4d0517d1de69d35a4a9e0f0f5311575b93a51d69d95da8adaecb69f152f2bba3b72af27c15397c5164b47de6a3fab8d4fab1e735bcb1e0d64b0f886f2c9a8279ecdace3a9e59a8fa383abf89c17848bcd1ea5a9f597cc6afd5d1e4557cb3cbd1c12e8d6a8d78267155f2c98b7cdc2518f5d472fe11cd1ed3aabeaff223557d5cf0aade573493e6c70f1ff0dbf068e1ade53b4acbf5f087b14daf193439a3f41eaafa5fee1c7a3dc8fcd75fedce959f3b1f5ba92a515ee89c35fed16367cfc5d77fe249780e07e9e9d58476ca2bae5147256d2f85873b11423d75a1f33f2fd4c655973aad597b5526fc59651d1985e4e13a98e86b495294a9c21ca4e3ad7d78bb3769472dbc7b0bc8fd0d86fb4782ab563469e2a8d4ab3beac212949bb2bbd9d08b39767ff2be2787f932a7835a5307c84ab4aaea6225539451504b92792c93bddaf79ee33d866cc0a494af676b24f62e2fe42747f6a4460de72f661fea99ba641aa8d6946514a4da724ad277dacb629e9e7521ed22e0d4000140add30b99d72f816470e955947adf8128ae844d8908a3348c8d53a8a36be57dfb861aaeb4e4acd6a5451bb5652f362eeba33b76335e3e839c5db6a4f2e391d3059fe2881da44810c82b349f3a87ef14bfd45a5caad2af3a3fbc50fcc459dc83e73ca3c252d158d8c53949d192518a72937c125b4f0cc3e9f54e14e9f9e9c29c29ce2b918dec929277a6e59acb6f0e07e97657e3f43e1710ad5b0d46afb74e32f7b46e559f0fce3a4f4ebad4e54d72918b518d9d4d68da328b4adbf9aad7bdac8a43f44637c99e89abff006ce9bffc552a535dc9d8a6c4f91cc0cb9988c553e8d6a535ef8dcd4f50b5e338bc154a4a94aa475556a6aad3cd3d6a6db4a596cd8f6f018ec0ce8727afabfa582a91d592979af8db63e83d731de47e352da98d70d5568de86b5a376f553d7595dbcba4e29f91aa8daffa852567756c128bddb6d533d9bcbd44797bc34633846752293fed1c6f27495f34d7add06e868cbd77465569c6cafcae72a4a3b6eed9f36ed249b6ecad9e5ea2fc8f4a56553483925b1470f187f133a709e4770d0e763312efb5475209f721d41e4ba33054a6eaaaf2ad4d462d41d3a2e6e556f94249f36fd26ac1e1e2e1575e32e51c12a16ab4e1155b958296ba966d6a6bf0cedd9eed84f25ba2a19ca8ceabdfcad59c93ecb9f43a3fecee0b0f6e470b429db7c69c6fde4ea0fcefa27ec8e3f16ff4385aad5edaf35a905f8a47dde84f23b376963312a0b6ba7415e5d4e6f2ee47b0104bea8a5d01f65305805fd5e84633b59d5979f55f5c9fc0b7a8f23335d5d8644e076c9bd968dffccfe27c5e33faec1d69d5a917384674dd3ad529f25192bc75145a595d676bbdfc0fb4c17a7d715fe54fe27cee27ec75394e56c4e26187949ca58684a9a866ef28a9eaebc60db7927bf2b1af364fb4b1d5f6271756be1b0b52b3bd47aea526ace7a929454fb5453ed3ebca6d1f4a309d38462a31826a314aca2946c9245c88a000a0726918f9b1f6be0ceb38f49a93a6f56dacaee37d97b3b5fb451c71899a461464ecafb6cafd7bcda606b9c92b5f2be44c567db1f135e329b9472ced7cb7bc8dbbdf678b03662aaea53a93cbcc84e59ecca2de7dc557d9ed2f53154d4e74e34db8b6e119aa9aaf59ab6bc5da5967745869157a15971a5516d4bd07bde4bb4f9dfb0f522e94756d6d49594792507fa57e75a14e0aff00856fbdf69167eadb4afeabf78c3fe6c4b32af4b6ca5fbc61bf3a05a3610062e6b8addbf8ec315523c5676b67c7677946c060aa2f0dcf7ec1aeba777a32dfd8064c8235ba1eee1f3315536766f8efbfc883364182a97b6ccedb1dfd16f807276ff8c9fa37faee28cc1836fa77f0e2b8beb22fd3bf8af59819b20c3e5fb4fd164b5d1ee5c571025c9715f5fc99aab3c8c9bcb6fbd707c0c2b6c7dbc78f481b301b27ed2fcb81b2a186039b2f6bf822be067302304bf4abaa45a15b805fa4fc2fc51646a0000a06bad0d64cd800a09274e7ab2e6b7e6cba78337d1ab1939453bb834a593c9b49aebc99618bc32a9169ada54d2bd39ea4f7e509facb727d3b7accd83b0c5efecf1664998cbe5e2c831d216e4aa26d2d6a7512c949b7a8f645f3ba8f95fb1b5572549c1a506e4941475528bab2564afb17c0fa8d25808578a8cb27196bc25b756766af6d8d59b567c4e5d1ba2151504a34a10a6bcc8518ca31be79e6dd979ced15c7a8cbaf99e7377e51a5b653fde30df9f02caa2e6f5bf572f35f1f87ccaed2dcd87fefc37e7c0b19abeae57b3e09dbcd7c7615c9ae1bb6fa1fddaf45f0f87611096cf3b753f4d677bf059dfde65056b6d5cc5fab5b9e597c3b0884b679dba9fa51df7e0b7fbc8222f6677ca1b2737bdfd74ef09747a9e8cf8be3f4b7ee328bd99df287a527bdf47f3de4456cfc1ba7c5f1fae3b8088c7665eafa296f7c5ff211ddd51caf05b9f0fae1bc9847665eafa296cbf4ff0022545e5b564bd55e8be1d8518a7b33be4bd26fd17c17d6d21adb971daa4fd15c5fd75dc9725be4bb67fb36f1f998caa473f396fdd296e4860c9acf66f7ba3eb2e3f5ee09f4efe2b8be060eaadca4faa1d37de8728f7426fadc52dfd2065b5767ed3f47a497b7b7a3d631d59bf423f8a6dfc0c951a9c60baa2fe2ca31be5b776e6fd5e84615f63eddcf8b37ac3bdf3976597c09fbbc77ddf5b6fc408c1af35fb52f97c0999b29acbb65e2cd73033c073dfb3f145815fa3b9d2ea5e2581a80002800001cb8dc246a45a68ea005072938a953bae512f32524da9aea5bd2dc766dee5e26ec7e0d545c1acd35b53e28af589d4b42a6527e6a767ab2e0efb15f819b058d8868cec44919570e2a872968ded69426bae13525e0744a3276ba85d66af77676b65decacc769dc2d0a94e153114d54a93508538bd7a9293d8942377db6b1d5fd249f369d497e1515ef772e0dea125b3515ac95a2f24b66f1a953d74baa273fdeeabd9452e994fe0905f7997f771ea8b7e2cb83a39296f9bee8fc88fbbbdf39f7dbc0d4b075dedad25ecc60be04ff0044c9f3aa547d0ea4eddd7b0c466f0d15b5cbf149fccd727878ed952ed945b338e83a7be29f5ab9be1a2a9af45770c1c7f7ec3ad924fd98ca5e083d254f746a4baa0d78d8b28e060b719ac347817054ff0048bdd46a76ea2f88fbed57b2877d4ff8972a8c7813a8b8219052f2f887b29d35d6e4fe41fde9ece497e093fe22ef5512320f27c362bed54eb53854c3d1a54dd482ab5211c3b8469eb2d792bcdb795ed95cfbbfb8e21feba5d9182f817a0a292382c4256e5a5db1837e0650c055bf9d524fb97822e401a30d47551bc00000000000000073e270919ab3573a001533d14dbfed2a5b82a934bc4d75340539c651a8b5e324e32536e4a516acd3bf417400f93d0fe4eb45e12ac6b51c2a5562f5a32955af5752566af1539b49e6f3b1f511a115b8d800c5417032000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fffd9, 'Microtek Inverter', 6000),
-	(13, 'eletriccharger', 'Charger to charge Electric Vehicle', _binary 0xffd8ffe000104a46494600010100000100010000ffdb0084000906070d0f0f0f0d0d0d0d0d0d0d0f0d0f0d0d0d0d0f0d0d0d0d1511161615111515181d2820181a251d151521312125292b2e2e2e171f3338332d39282d2e2b010a0a0a0e0d0d1b0f101a34251f252d37383737372f2b303737333737352c382e37372b372f373533372f2b372b372d342d3737372b2d3737372c2b2b2d373737ffc000110800bd010b03012200021101031101ffc4001b00000202030100000000000000000000000001020603040507ffc4004810000202010103050b0a03040b0000000000010203110405122106314161710713223251728191a1b1c11423334252627382b2b32592a253d1e1f0246364748393a4c2c3c4d2ffc4001801010003010000000000000000000000000001030402ffc40022110100010303040300000000000000000000010203311112210471b1f0134161ffda000c03010002110311003f00f49000000000000000188000062000010008189b01e4591645902591a6432302402c800c059180c6446031880060200000001808006200000000000000000c800c5916409088ef1172026d89c918a561af6de06ccad48d1d6ed5aea5993473f696d155c5c9be63ce794db6e6fc152f0e6b2fee43a176b02c7b6bba177b6e34a8f0e794b8e0ac5fdd2b686f6ec2714df477b84a4bade7847da52b57aa72784df5639fd1d6767933b1fbfb729af98adf849735b67d9eb4ba40b6ec5e586d8b31373ae55be9bab86eb5f777545bf62eb659b4bcacbd7d2c6a9f991957ef93382aae84b0973243ef605b6ae5654fc7ae71ec6a5fdc6ee9f6fe9a6f0a524df43849bf664a3c2a8f852b26abaab4a56d8d67713e6497d693794974f1e84d9a7aae52d893af469e96ae6cc258beceb9d8b8fa161757481eabdfe3c32dc73cdbf19433eb464c9e290db3acadefc3517c5f4b574de7b537c57697ae45f2b7e54fe4da8dd8ea126eb94528c2f4965f0e68c92e385c1a4f18c710b964792098f204d31e48263025901000f202001808009080320301080790c885902591648e44d8126c8b645b22e4049c8c73991948c164c0765873f55a8c6495f69c7da1a8e0c0e36ddd6ef4d41bf063994fb171679c6d4d5b9b9d8f9e6fd59e65eaf7169db173dcbe5d2d282fcd24bdd9297afe65f9a4fb32a2bda063d1d32935bab33b251aebf3e4f07ab6ced0428aaba61e2d714b3d327d327d6de5fa4a472474aa5aba535c29aecb9f9efc05efc9e8a9018d562b23859c36f82515cf29378515d6db4bd26c289a9b52e75c1cd7075c2538be1f4adaaebf4a73735f8407036cea9ca5de632cd74ca596bc5b6fe69dbd6b86ec7eec574b79e7e01236614471994f77ab772fde1133a302355d93a2d85b53dd9c251b2b97d99c5e51b8d7f9460d6c3306fece1fb52f884bdb7666b63a8a69d4416237d70b12fb3bcb2e3e8795e836b255bb9bddbdb36a5fd959a8affaf7ff00f2168404c08e46048059002590c8800632230180860020100f245b06c4d803645b06c83600d9094824cc526029c8d6ba664b24695f3035f5369c2da36f0674b553387ae973815bdaefe6a7e743f5157bd657a2a5e876cb3f02cfb5be8e7db0fd4562dfadf8707eab80b372317cfea25e4ae882f565fc0b9c2653b921e35fe725ea48b54181bb191c9e524fe6d2fb76c53ff855b7ff00b1ec37e2ce5f289f8157e2ea3f6b4e070d226a0fc83ab9fd066030ca1831dff473f357ea8af89b16f41afa8fa3b3cd8fee440f43ee64b1b3df5ea6f7fd35af816d4cab773958d9d5fdeb6f7fd78f8167c8130447234048644603188006310012010000808b00c89b06c83600d906c6d906c08c998a6c9c99826c0c7648d1d448d9b59a3a8901a1aa91c6d5b3a9aa91c8d4b0385b5be8e7db1fd4561f8f8f2d32f649bf8167dadf473fcbfad15672c5b0ebae4bd7bc05a391efc2d4f559fe7dc5ae0ca7f2325e1eabcf8fc4b6c181b31397ca2f16afc4bff6b4e74a0ce6728f9aaf3eefdba00e3c258326fcbc98ed309b9a6b5437dfd67194629af05b7c38f561b606bc9be931ea3c49f9abf5c49b31ea3c4975a4bfaa2fe007a5f73e5fc368eb96a3f7e6be058caff20e38d9ba5eb5a87ff5369df01924c88013432286048043018c48600310c08313191602645b1b20c04d90931b6639302326609b324d9826c0c16334750cdcb59a1a86073f52ce4ea19d3d43397a80389b5be8e7f97f5c4ab4966d879abf532d1b5be8e7f97f72255d3f9e879abdec0ef72265e1ea7b60fdacb8c194ae43bf0afebdcf8973ad81b306737947cd576dbfa293a30672b94562dea63d3bb649767809fc00e52191325354a71b2c4e2a3535179e794b09b4bb1497ac2622670461d54d6eb8f4a954df6353ff00e4cb95d3cc7268bfbe77f9f43b2951f3546cc7f9eb087b4723a38d9fa45fea9bf5ce52f89d9395c9658d0e93fddea7eb8e4ea00c62180d0d0912403431224806800600030031322c6c8b01320c6c8b02126424c9331c80c736609b32ccc33606bdacd0bcdeb4d0bc0e76a0e5ea0ea6a0e56a40e26d67f3767647f720559fd2c7cd5ee65ab6aaf026beebf671f81519cb16af35af6302c3c8a8e1dd9e7f07e0fe25c2b29dc8fb3365bd75d525ee7ee2e15b03660caaf2eb58e9bb473e75bb7a92f2c5ca29fbbd85a6053bba356e52d2e3a216f0e97f39fe0065aad8ce2a516a519714d196336938ae0a4d3925f59ae6c9c0e4feccbdf7cb6773d26969695f73f0d6fb5955570faf663a17374977da8f6655a3c54e5f2d6a2a31b6c4f535cf86f3b2317bb1693e6c73e0b68b33546ec4315eebe8b5722dc44d5333a7118ef3e7f14fdafaece69876592ffb50b672c553f3eafd367f79ad3a71da7429adf7b8422b329ce6d2f2e7118fb548a9b5ed7c9b58d168d7fb2e9bdb5459d231e96855d75d6b9ab8420bb2314be066010d0607801a449091200449091240030180860006bb22c6c8b022c8324c8b020cc7226cc720314cc3332ccc33035ed346e376c34ee4073b508e5ea51d6bd1cdd4440e36ae194ca8ed1d3b8494b0f117eb8976be069fc9e12e16437e0f9d278976a7e50385c97b77351bb9f1a328aeb59525ee7eb45dea915dbf92d24e36e8aedf7169c2bb612aed8fdd6f8c64baf3fe1dca958945db54ea935c6135869f4e1f335d680e842471f6f699dd7696b8e37ecefb5c77b993dfde6df52524d9d084cd3dad5ce50efb5fd2e96cefd15c1ef556415562c79138d7fce4c69af2e6bddb676e7e9a1b6369d7a78ad2d0a1274b5de6724a52a71c657be8575926e5f762a1ccf9abba5729cb0b32971971e326d717dacd9d7595dcf7fbdf7a9bf19c1f09bf2b4fa7ac8d5a54b1284e51b23c632e09265b76e6e9e30cbd274ff151ce673dfdf7566ef7bf8715c25cddbe42cbc8dd96efd7529acd7a7c5b2f2621e2fae4d7b4e1e96ddd9c6728eeab24e36c1ac77bbf1c7b328f5de48ec9869e8535894f50a33949715b98f0629f63cf6b652d8ede0924348780160303c0c010d2043001a01a001800000001aac8b1b13022c8489322c08331c89b31c80c5230cccd2314c0d6b0d5b51b934609c00e6dd1346da9b3b33a8c2e803892d2649d3a05e43b0b4fd467ab4fd4061d9da449ae06e72960abd06a2c4a2e75d6e50728a96ecb2927c7b4d9d255c511e59c3f86eaff00097eb881c3e4d6c196b34346a9dca16db193947bd66be139258c34d704bca4f51c9bd654d4e3085ca394d464d29c1ac4a0d73e1af53c3e83bbdcf57f0bd1fe1cbf724581a03c8df2769b2d71977caa59e30c28db1f3a2d7b57065af60f23f434b56384ee9ae695ed38c5f54524bd792d7a8d2d5624adaebb12e295908cd27e559e61d5a6ae1e24210f362901e6bdd1b64c617c6d8f0f96553524b862fa5271b3d31697e54583b9bed295da555cf8bad46507f724da71f4493f58bba4695ba74f728b6a9bdab249708553834e4fc8b2a3eb38fdca252de9c5718c237425e4fa48b8bebe903d230318d01118c00486030018000c000000000d4644932204644193645818d9092323445a030c918e48ced1071035a5131b81b4e245c00d4758bbd1b7b8350035954648d66c2812dc023a687144795d5e7676b17934f64bf956f7c0d9a23c51b3b434fdf68baafed69b61fcd06be20713b9b4f3b2f4abecab22ff00e649fc4b2b4533b93ea37b433adf3d57d8b1e48b4b1ee65d700470224006aed2d146fa2dd3c9e15d5cebcfd9de5852f43e3e8285dcb2328ea35d54f0a55392693ca6f79293f5c7da7a41e71c837fc6b6ac5737fa4bf4fca80f46c0c618010606002018000c43000000000003508b24c8b022c4c908083447064c0b0062688ee99b02c0187745ba66c0b740c5b835032ee9251031ee8f749e01a00a63c4df89a94ae26da0283c8e7f24dadb4340f846d93b6a5d0feb452fc922fe50bba2e96cd3dda5db1a78e67a79461725f5a39f073d4f328bfca8ba6ccd7d5a9a6bd4532deaad8a945f4af2a7d69f0f401b41801811949453949e2314e527e44b8b679b7725cdda9da7ad6b0ac9c22b3f6a7295925e8cc7d676bba86df8693453a54be7b571956927c553cd397abc1fcdd46e773cd892d16cfaabb23bb7dcdea350ba5593c782fad45457a00b2800000000000000000000000000001a8c062022224c4047018240043018241802181e09607802181e063c011c028934894500ea899d118226061d5e9abbab9d36c54ebb22e338be98b3cce16eb793d7ca3284f55b2af9e549613849f4a7cd19f962f0a5ceb07a911b6b8ce2e138c67092c4a324a5192f234f9c0e1e87967b2ae8a9475b4d7e585f2ef338f5352c7b0e76deee89b3f4d09779b16aedc7055bc529f96567363b32cd8d5f20764d92def93badbe754db3847f97385e837365f24366e9a51b2ad2c1d91e31b2d6ee9c5f962e59dd7d680a87253937abda1ab5b5f6b45a8c5c67a6d3ce3bae725e249c1f895c7eac5f16f8bebf4c004000310000c400000002183010000000001fffd9, 'Electric Charger', 20000);
-/*!40000 ALTER TABLE `variant_product` ENABLE KEYS */;
+DELETE FROM `variant_product`;
 
+-- Dumping structure for table product_becho.variant_product_stock
+CREATE TABLE IF NOT EXISTS `variant_product_stock` (
+  `pk` int NOT NULL,
+  `vp_pk` int NOT NULL,
+  `stock_pk` int NOT NULL,
+  PRIMARY KEY (`pk`),
+  KEY `FK_vp_pk` (`vp_pk`),
+  KEY `FK_stock_pk` (`stock_pk`),
+  CONSTRAINT `FK_stock_pk` FOREIGN KEY (`stock_pk`) REFERENCES `stock` (`pk`),
+  CONSTRAINT `FK_vp_pk` FOREIGN KEY (`vp_pk`) REFERENCES `variant_product` (`pk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table product_becho.variant_product_stock: ~0 rows (approximately)
+DELETE FROM `variant_product_stock`;
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
