@@ -7,23 +7,53 @@
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<p>1. Create Guest User</p>
-<div id="guest-details">
-    <p>Email <input type="text" id="email"/></p>
-    <p>Phone <input type="text"  id="phone"/></p>
-    <input type="button" value="Next" id="guest-next"/>
+<div class="main-container">
+    <div class="store-header">
+            <h1 class="logo">Product Becho</h1>
+    </div>
+    <div class="lower-container">
+        <div class="right-checkout">
+            <div class="card">
+                <h3 class="accordion">1. Create Guest User</h3>
+                <div id="guest-details" class="card-padding">
+                    <div class="field">
+                        <div class="attribute-name">
+                            Email
+                        </div>
+                        <div>
+                            <input type="text" id="email" class="pb-input"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="attribute-name">
+                            Phone
+                        </div>
+                        <div>
+                            <input type="text"  id="phone" class="pb-input"/>
+                        </div>
+                    </div>
+                    <div class="left-pad"><input type="button" value="Next" id="guest-next" class="pb-button"/></div>
+
+                </div>
+            </div>
+            <p>2. Enter Shipping Address</p>
+            <div id="shipping-details" class="hide">
+                <p>Name <input type="text" id="shipping-user-name" class="pb-input"/></p>
+                <p>Address <input type="text"  id="shipping-address" class="pb-input"/></p>
+                <p>Landmark <input type="text"  id="shipping-address-landmark" class="pb-input"/></p>
+                <p>City <input type="text" id="shipping-city" class="pb-input"/></p>
+                <p>State <input type="text"  id="shipping-state" class="pb-input"/></p>
+                <p>Zip Code <input type="text"  id="shipping-zip-code" class="pb-input"/></p>
+                <p>Phone <input type="text"  id="shipping-phone" class="pb-input"/></p>
+                <input type="button" value="Next" id="shipping-next "/>
+            </div>
+        </div>
+        <div class="left-checkout">
+                total
+        </div>
+    </div>
 </div>
-<p>2. Enter Shipping Address</p>
-<div id="shipping-details" class="hide">
-    <p>Name <input type="text" id="shipping-user-name"/></p>
-    <p>Address <input type="text"  id="shipping-address"/></p>
-    <p>Landmark <input type="text"  id="shipping-address-landmark"/></p>
-    <p>City <input type="text" id="shipping-city"/></p>
-    <p>State <input type="text"  id="shipping-state"/></p>
-    <p>Zip Code <input type="text"  id="shipping-zip-code"/></p>
-    <p>Phone <input type="text"  id="shipping-phone"/></p>
-    <input type="button" value="Next" id="shipping-next"/>
-</div>
+
 <script src="js/checkout.js">
 </script>
 </body>
