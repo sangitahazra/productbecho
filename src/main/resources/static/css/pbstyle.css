@@ -1,0 +1,36 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.main-container {
+   display:flex;
+   height:100%;
+}
+.left-container {
+      border: 1px solid #ced4da;
+      width: 25%;
+      height: 100%;
+}
+
+.right-container {
+  width: 100%;
+}
+
+.header-container {
+    border: 1px solid #ced4da;
+    height: 10%;
+    background-color: #09cfcf;
+}
+
+.content-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.bp-card {
+    margin-top: 40px;
+}
+.hide {
+    display: none;
+}
