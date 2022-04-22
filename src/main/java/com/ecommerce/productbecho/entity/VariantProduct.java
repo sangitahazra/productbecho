@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,8 +31,14 @@ public class VariantProduct implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "price")
+    private Double price;
+
     @Lob
     @Column(name = "image")
     private byte[] image;
+
+    @OneToMany(mappedBy = "variantProduct")
+    private Set<Stock> stocks;
 
 }
