@@ -24,13 +24,10 @@ CREATE TABLE IF NOT EXISTS `abstract_order` (
   `pk` int NOT NULL,
   `total_amount` double DEFAULT NULL,
   `address_pk` int NOT NULL,
-  `abstract_order_entry_pk` int NOT NULL,
   `user_pk` int NOT NULL,
   PRIMARY KEY (`pk`),
   KEY `FK_abstract_order_address` (`address_pk`),
-  KEY `FK_abstract_order_abstract_order_entry` (`abstract_order_entry_pk`),
   KEY `FK_abstract_order_user` (`user_pk`),
-  CONSTRAINT `FK_abstract_order_abstract_order_entry` FOREIGN KEY (`abstract_order_entry_pk`) REFERENCES `abstract_order_entry` (`pk`),
   CONSTRAINT `FK_abstract_order_address` FOREIGN KEY (`address_pk`) REFERENCES `address` (`pk`),
   CONSTRAINT `FK_abstract_order_user` FOREIGN KEY (`user_pk`) REFERENCES `user` (`pk`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -43,8 +40,11 @@ CREATE TABLE IF NOT EXISTS `abstract_order_entry` (
   `pk` int NOT NULL,
   `quantity` int NOT NULL,
   `vp_pk` int NOT NULL,
+  `abstract_order_pk` int NOT NULL,
   PRIMARY KEY (`pk`),
   KEY `FK_abstract_order_entry_variant_product` (`vp_pk`),
+  KEY `FK_abstract_order_entry_abstract_order` (`abstract_order_pk`),
+  CONSTRAINT `FK_abstract_order_entry_abstract_order` FOREIGN KEY (`abstract_order_pk`) REFERENCES `abstract_order` (`pk`),
   CONSTRAINT `FK_abstract_order_entry_variant_product` FOREIGN KEY (`vp_pk`) REFERENCES `variant_product` (`pk`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
 -- Dumping data for table product_becho.hibernate_sequence: ~0 rows (approximately)
 DELETE FROM `hibernate_sequence`;
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-	(32);
+	(35);
 
 -- Dumping structure for table product_becho.order
 CREATE TABLE IF NOT EXISTS `order` (
@@ -131,7 +131,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Dumping data for table product_becho.user: ~2 rows (approximately)
 DELETE FROM `user`;
 INSERT INTO `user` (`pk`, `username`, `role`, `password`, `phone`) VALUES
-	(1, 'abhirup', 'ADMIN', '1234', NULL);
+	(1, 'abhirup', 'ADMIN', '1234', NULL),
+	(32, 'iamabhirup7@gmail.com', 'GUEST', NULL, '31312121');
 
 -- Dumping structure for table product_becho.variant_product
 CREATE TABLE IF NOT EXISTS `variant_product` (
