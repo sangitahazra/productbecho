@@ -29,7 +29,8 @@ public class PBSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/backoffice/**").hasAuthority("ADMIN")
                 .and().formLogin().defaultSuccessUrl("/backoffice")
-                .and().logout().permitAll();
+                .and().logout().permitAll()
+                .and().csrf().disable();
     }
 
     @Bean

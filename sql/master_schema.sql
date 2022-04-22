@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `address` (
   `pk` int NOT NULL,
   `name` varchar(50) NOT NULL,
   `line1` varchar(50) NOT NULL,
-  `line2` varchar(50) NOT NULL,
+  `line2` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `city` varchar(50) NOT NULL,
   `state` varchar(50) NOT NULL,
   `zip` varchar(50) NOT NULL,
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
 -- Dumping data for table product_becho.hibernate_sequence: ~0 rows (approximately)
 DELETE FROM `hibernate_sequence`;
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-	(12);
+	(23);
 
 -- Dumping structure for table product_becho.order
 CREATE TABLE IF NOT EXISTS `order` (
@@ -191,13 +191,13 @@ CREATE TABLE IF NOT EXISTS `user` (
   `pk` int NOT NULL,
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `role` varchar(50) NOT NULL DEFAULT '',
-  `password` varchar(50) NOT NULL DEFAULT '',
+  `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`pk`),
   UNIQUE KEY `id` (`username`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table product_becho.user: ~0 rows (approximately)
+-- Dumping data for table product_becho.user: ~2 rows (approximately)
 DELETE FROM `user`;
 INSERT INTO `user` (`pk`, `username`, `role`, `password`, `phone`) VALUES
 	(1, 'abhirup', 'ADMIN', '1234', NULL);
