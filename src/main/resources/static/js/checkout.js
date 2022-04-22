@@ -34,6 +34,7 @@ $("#shipping-next").click(function(e) {
         }),
         success: function(result) {
             $("#shipping-details").addClass("hide");
+            $("#payment-details").removeClass("hide");
         },
         error: function(result) {
         }
