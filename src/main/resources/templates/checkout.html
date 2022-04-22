@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Product Becho</title>
+    <link rel="stylesheet" th:href="@{/css/pbstyle.css}">
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<div class="main-container">
+    <div class="store-header">
+            <h1 class="logo">Product Becho</h1>
+    </div>
+    <div class="lower-container">
+        <div class="right-checkout">
+            <div class="card">
+                <h3 class="accordion">1. Create Guest User</h3>
+                <div id="guest-details" class="card-padding">
+                    <div class="field">
+                        <div class="attribute-name">
+                            Email
+                        </div>
+                        <div class="input-container">
+                            <input type="text" id="email" class="pb-input"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="attribute-name">
+                            Phone
+                        </div>
+                        <div class="input-container">
+                            <input type="text"  id="phone" class="pb-input"/>
+                        </div>
+                    </div>
+                    <div class="button-container"><input type="button" value="Next" id="guest-next" class="pb-button"/></div>
+
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="accordion">2. Enter Shipping Address</h3>
+                <div id="shipping-details" class="hide card-padding">
+                    <div class="field">
+                        <div class="attribute-name">
+                            Name
+                        </div>
+                        <div class="input-container">
+                            <input type="text" id="shipping-user-name" class="pb-input"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="attribute-name">
+                            Phone
+                        </div>
+                        <div class="input-container">
+                            <input type="text"  id="shipping-phone" class="pb-input"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="attribute-name">
+                            Address
+                        </div>
+                        <div class="input-container">
+                            <input type="text"  id="shipping-address" class="pb-input"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="attribute-name">
+                            Landmark
+                        </div>
+                        <div class="input-container">
+                            <input type="text"  id="shipping-address-landmark" class="pb-input"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="attribute-name">
+                            City
+                        </div>
+                        <div class="input-container">
+                            <input type="text" id="shipping-city" class="pb-input"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="attribute-name">
+                            State
+                        </div>
+                        <div class="input-container">
+                            <input type="text"  id="shipping-state" class="pb-input"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="attribute-name">
+                            Zip Code
+                        </div>
+                        <div class="input-container">
+                            <input type="text"  id="shipping-zip-code" class="pb-input"/>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <input type="button" value="Next" id="shipping-next" class="pb-button"/>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="accordion">3. Payment</h3>
+                <div id="payment-details" class="hide">
+                    <div class="radio-container">
+                        <input type="radio" id="payment-radio" checked="checked"/>Cash On Delivery
+                    </div>
+                    <div class="button-container">
+                        <input type="button" value="Next" id="payment-next" class="pb-button"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="left-checkout">
+                total
+        </div>
+    </div>
+</div>
+
+<script src="js/checkout.js">
+</script>
+</body>
+</html>

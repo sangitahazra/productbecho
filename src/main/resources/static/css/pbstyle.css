@@ -1,0 +1,112 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.main-container {
+   display:flex;
+   height:100%;
+   flex-direction: column;
+}
+.left-container {
+      border: 1px solid #ced4da;
+      width: 25%;
+      height: 100%;
+}
+
+.right-container {
+  width: 100%;
+}
+
+.header-container {
+    border: 1px solid #ced4da;
+    height: 10%;
+    background-color: #09cfcf;
+}
+
+.content-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.bp-card {
+    margin-top: 40px;
+}
+.hide {
+    display: none;
+}
+.store-header {
+    width: 100%;
+    background-color: #fafafa;
+    box-shadow: 0 0 16px 0 rgb(0 0 0 / 16%);
+}
+.logo {
+    width: 15%;
+    color: #0DB776;
+    margin-top: 8px;
+    padding-left: 10px;
+}
+.right-checkout {
+    flex: 0 0 70%;
+    padding-left: 10px;
+}
+
+.lower-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.accordion {
+    color: darkslategrey;
+}
+.pb-input {
+        border: 1px solid darkgrey;
+        outline: 0;
+        padding: 8px;
+        font-size: 1rem;
+        width: 50%;
+        border-radius: 8px;
+}
+.attribute-name {
+    width: 15%;
+    margin-top: 10px;
+}
+.button-container {
+    padding-left: 50%;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+.field {
+    display: flex;
+    flex-direction: row;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+.card {
+    border-bottom: 1px solid green;
+    width: 75%;
+}
+.pb-button {
+appearance: none;
+    background-color: #2ea44f;
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 6px;
+    box-shadow: rgb(27 31 35 / 10%) 0 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    display: inline-block;
+    font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 7px 27px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
+.card-padding {
+    padding-left: 10%;
+}
+.input-container {
+    width: 100%;
+}
