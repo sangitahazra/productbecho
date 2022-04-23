@@ -41,4 +41,8 @@ public class VariantProduct implements Serializable {
     @OneToMany(mappedBy = "variantProduct")
     private Set<Stock> stocks;
 
+    @OneToMany(mappedBy = "variantProduct")
+    private Set<AbstractOrderEntry> abstractOrderEntries;
+
+
 }

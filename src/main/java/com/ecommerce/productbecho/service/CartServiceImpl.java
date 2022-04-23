@@ -24,66 +24,69 @@ public class CartServiceImpl implements CartService {
     AbstractOrderEntryRepository abstractOrderEntryRepository;
 
     @Autowired
-    AbstractOrderEntryVariantProductRepository abstractOrderEntryVariantProductRepository;
+    StockRepository stockRepository;
+
 
     @Autowired
     HttpSession httpSession;
 
     @Override
-    public void addProductToCart(String code, int quantity) {
+    public void addProductToCart(String code, int quantity) throws Exception {
         Cart cart;
         String cartCode;
         AbstractOrder abstractOrder;
         AbstractOrderEntry abstractOrderEntry;
-        AbstractOrderEntryVariantProduct abstractOrderEntryVariantProduct;
-        if (httpSession.getAttribute("cartID") == null ||
-                httpSession.getAttribute("abstractOrder") == null
-                || httpSession.getAttribute("abstractOrderEntry") == null) {
-            cart = new Cart();
-            cartCode = UUID.randomUUID().toString();
-            cart.setCode(cartCode);
-            cartRepository.save(cart);
-            abstractOrder = new AbstractOrder();
-            VariantProduct variantProductEntity = variantProductRepository.findByCode(code);
-            abstractOrder.setTotalAmount(
-                    (variantProductEntity.getPrice()) * quantity);
-            abstractOrderRepository.save(abstractOrder);
-            abstractOrderEntry = new AbstractOrderEntry();
-            abstractOrderEntry.setQuantity(1);
-            AbstractOrderEntry abstractOrderEntryEntity = abstractOrderEntryRepository.save(abstractOrderEntry);
-            abstractOrderEntryVariantProduct = new AbstractOrderEntryVariantProduct();
-            abstractOrderEntryVariantProduct.setAoePk(abstractOrderEntryEntity.getPk());
-            abstractOrderEntryVariantProduct.setVpPk(variantProductEntity.getPk());
-            abstractOrderEntryVariantProductRepository.save(abstractOrderEntryVariantProduct);
-            httpSession.setAttribute("cartID", cartCode);
-            httpSession.setAttribute("abstractOrder", abstractOrder);
-            httpSession.setAttribute("abstractOrderEntry", abstractOrderEntry);
-
-            httpSession.setAttribute("abstractOrderEntryVariantProduct", abstractOrderEntryVariantProduct);
-        } else {
-            cartCode = (String) httpSession.getAttribute("cartID");
-            abstractOrder = (AbstractOrder) httpSession.getAttribute("abstractOrder");
-            abstractOrderEntry = (AbstractOrderEntry) httpSession.getAttribute("abstractOrderEntry");
-            abstractOrderEntryVariantProduct = (AbstractOrderEntryVariantProduct)
-                    httpSession.getAttribute("abstractOrderEntryVariantProduct");
-            calculateOrderTotal(code, quantity, abstractOrder, abstractOrderEntry, abstractOrderEntryVariantProduct);
-        }
+        VariantProduct variantProductEntity = variantProductRepository.findByCode(code);
+        Stock stockEntity;
+        if (variantProductEntity != null) {
+            stockEntity = stockRepository.findByVariantProduct(variantProductEntity);
+        } else throw new Exception();
+        if (stockEntity != null && stockEntity.getQuantity() >= quantity) {
+            if (httpSession.getAttribute("cartID") == null ||
+                    httpSession.getAttribute("abstractOrder") == null) {
+                cart = new Cart();
+                abstractOrder = new AbstractOrder();
+                abstractOrder.setTotalAmount(variantProductEntity.getPrice() * quantity);
+                AbstractOrder abstractOrderEntity = abstractOrderRepository.save(abstractOrder);
+                cartCode = UUID.randomUUID().toString();
+                cart.setCode(cartCode);
+                cart.setAbstractOrderPk(abstractOrderEntity.getPk());
+                cartRepository.save(cart);
+                abstractOrderEntry = new AbstractOrderEntry();
+                abstractOrderEntry.setQuantity(quantity);
+                abstractOrderEntry.setVariantProduct(variantProductEntity);
+                abstractOrderEntry.setAbstractOrder(abstractOrderEntity);
+                abstractOrderEntryRepository.save(abstractOrderEntry);
+                httpSession.setAttribute("cartID", cartCode);
+                httpSession.setAttribute("abstractOrder", abstractOrderEntity);
+            } else {
+                abstractOrder = (AbstractOrder) httpSession.getAttribute("abstractOrder");
+                calculateOrderTotal(code, quantity, abstractOrder, variantProductEntity);
+            }
+        } else throw new Exception();
     }
 
     private void calculateOrderTotal(String code, int quantity,
-                                     AbstractOrder abstractOrder, AbstractOrderEntry abstractOrderEntry, AbstractOrderEntryVariantProduct abstractOrderEntryVariantProduct) {
+                                     AbstractOrder abstractOrder, VariantProduct variantProductEntity) {
 
-        VariantProduct variantProductEntity = variantProductRepository.findByCode(code);
-        // to write stock check logic
         double total = ((abstractOrder.getTotalAmount()) +
                 (variantProductEntity.getPrice()) * quantity);
         abstractOrder.setTotalAmount(total);
-        abstractOrderRepository.save(abstractOrder);
-        abstractOrderEntry.setQuantity(abstractOrderEntry.getQuantity() + 1);
-        AbstractOrderEntry abstractOrderEntryEntity = abstractOrderEntryRepository.save(abstractOrderEntry);
-        abstractOrderEntryVariantProduct.setAoePk(abstractOrderEntryEntity.getPk());
-        abstractOrderEntryVariantProduct.setVpPk(variantProductEntity.getPk());
-        abstractOrderEntryVariantProductRepository.save(abstractOrderEntryVariantProduct);
-
+        AbstractOrder abstractOrderEntity = abstractOrderRepository.save(abstractOrder);
+        httpSession.setAttribute("abstractOrder", abstractOrderEntity);
+        AbstractOrderEntry abstractOrderEntry =
+                abstractOrderEntryRepository.
+                        findByVariantProductAndAbstractOrder(variantProductEntity, abstractOrderEntity);
+        if (abstractOrderEntry != null) {
+            abstractOrderEntry.setQuantity(abstractOrderEntry.getQuantity() + quantity);
+            abstractOrderEntryRepository.save(abstractOrderEntry);
+        } else {
+            AbstractOrderEntry abstractOrderNewEntry = new AbstractOrderEntry();
+            abstractOrderNewEntry.setAbstractOrder(abstractOrderEntity);
+            abstractOrderNewEntry.setVariantProduct(variantProductEntity);
+            abstractOrderNewEntry.setQuantity(quantity);
+            abstractOrderEntryRepository.save(abstractOrderNewEntry);
+        }
     }
 }
+

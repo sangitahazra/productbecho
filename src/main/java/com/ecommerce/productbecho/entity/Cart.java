@@ -18,4 +18,7 @@ public class Cart {
 
     @Column(name = "code")
     private String code;
+
+    @Column(name = "abstract_order_pk")
+    private int abstractOrderPk;
 }

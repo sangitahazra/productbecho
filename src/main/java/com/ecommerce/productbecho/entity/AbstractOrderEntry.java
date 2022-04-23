@@ -21,4 +21,12 @@ public class AbstractOrderEntry {
 
     @Column(name = "quantity")
     private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "vp_pk")
+    private VariantProduct variantProduct;
+
+    @ManyToOne
+    @JoinColumn(name = "abstract_order_pk")
+    private AbstractOrder abstractOrder;
 }
