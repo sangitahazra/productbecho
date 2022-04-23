@@ -26,4 +26,7 @@ public class AbstractOrder {
     @OneToMany(mappedBy = "abstractOrder")
     private Set<AbstractOrderEntry> abstractOrderEntries;
 
+    @OneToOne(mappedBy = "abstractOrder")
+    private Cart cart;
+
 }

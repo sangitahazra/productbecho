@@ -50,7 +50,7 @@ public class CartServiceImpl implements CartService {
                 AbstractOrder abstractOrderEntity = abstractOrderRepository.save(abstractOrder);
                 cartCode = UUID.randomUUID().toString();
                 cart.setCode(cartCode);
-                cart.setAbstractOrderPk(abstractOrderEntity.getPk());
+                cart.setAbstractOrder(abstractOrderEntity);
                 cartRepository.save(cart);
                 abstractOrderEntry = new AbstractOrderEntry();
                 abstractOrderEntry.setQuantity(quantity);
