@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class PBUser implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "pk")
     private int pk;
 
@@ -26,5 +26,8 @@ public class PBUser implements Serializable {
 
     @Column(name = "password")
     private String pwd;
+
+    @Column(name = "phone")
+    private String phone;
 
 }

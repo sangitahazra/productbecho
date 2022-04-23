@@ -7,38 +7,39 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "variant_product")
-public class VariantProduct implements Serializable {
+@Table(name = "address")
+public class Address implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "pk")
     private int pk;
 
-    @Column(name = "code")
-    private String code;
-
-    @Column(name = "description")
-    private String description;
-
     @Column(name = "name")
     private String name;
 
-    @Column(name = "price")
-    private Double price;
+    @Column(name = "line1")
+    private String line1;
 
-    @Lob
-    @Column(name = "image")
-    private byte[] image;
+    @Column(name = "line2")
+    private String line2;
 
-    @OneToMany(mappedBy = "variantProduct")
-    private Set<Stock> stocks;
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "state")
+    private String state;
+
+    @Column(name = "zip")
+    private String zip;
+
+    @Column(name = "phone")
+    private String phone;
 
 }

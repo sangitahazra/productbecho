@@ -28,7 +28,7 @@ public class BackofficeController {
     }
 
     @PostMapping("/backoffice/add-product")
-    public String greetingSubmit(@ModelAttribute("product") Product product, Model model,
+    public String addProduct(@ModelAttribute("product") Product product, Model model,
                                  @RequestParam("imageFile") MultipartFile file) throws IOException {
         productService.uploadProduct(product, file);
         model.addAttribute("uploaded", true);
