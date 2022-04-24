@@ -14,8 +14,16 @@ public class AddToCartController {
     CartService cartService;
 
     @PostMapping("/addToCart")
-    public ResponseEntity addProductToCart(@RequestParam("code") String code, @RequestParam("quantity") int quantity) throws Exception {
+    public ResponseEntity addProductToCart(@RequestParam("code") String code,
+                                           @RequestParam("quantity") int quantity) throws Exception {
         cartService.addProductToCart(code, quantity);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/updateQuantity")
+    public ResponseEntity updateQuantity(@RequestParam("code") String code,
+                                         @RequestParam("quantity") int quantity) throws Exception {
+        cartService.updateQuantity(code, quantity);
         return ResponseEntity.ok().build();
     }
 
