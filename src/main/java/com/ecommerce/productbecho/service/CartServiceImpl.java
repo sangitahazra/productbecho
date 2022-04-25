@@ -82,6 +82,21 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    @Override
+    public void removeProduct(String code) throws Exception {
+        AbstractOrder abstractOrder = (AbstractOrder) httpSession.getAttribute("abstractOrder");
+        if (abstractOrder != null) {
+            VariantProduct variantProductEntity = variantProductRepository.findByCode(code);
+            AbstractOrderEntry abstractOrderEntryEntity = abstractOrderEntryRepository.findByVariantProductAndAbstractOrder(
+                    variantProductEntity, abstractOrder);
+            abstractOrder.setTotalAmount(abstractOrder.getTotalAmount()
+                    - (abstractOrderEntryEntity.getQuantity() * variantProductEntity.getPrice()));
+            abstractOrderRepository.save(abstractOrder);
+            abstractOrderEntryRepository.delete(abstractOrderEntryEntity);
+        }
+        else throw new Exception();
+    }
+
     private void calculateOrderTotal(String code, int quantity,
                                      AbstractOrder abstractOrder, VariantProduct variantProductEntity) {
 

@@ -27,4 +27,10 @@ public class AddToCartController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/removeProduct")
+    public ResponseEntity removeProduct(@RequestParam("code") String code) throws Exception {
+        cartService.removeProduct(code);
+        return ResponseEntity.ok().build();
+    }
+
 }
