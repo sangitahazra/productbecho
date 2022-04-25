@@ -8,11 +8,12 @@
     <div class="col-sm-3 my-2 d-flex align-content-stretch flex-wrap" th:each="product : ${products}">
         <div class="card">
             <img th:src="*{'data:image/png;base64,'+product.image}" alt=""/>
-            <div class="card-body">
+            <div id="abstract-order-entry"  class="card-body">
                 <h5 class="card-title" th:text="${product.name}">Product name</h5>
                 <p class="card-text" th:text="${product.description}">Product summary</p>
                 <p class="card-text" th:text="${product.price}">Product cost</p>
-                <p class="card-text" th:text="${product.code}">Product summary</p>
+                <p id="productode" class="card-text" th:text="${product.code}">Product summary</p>
+                <div class="button-container"><input type="button" value="AddToCart" id="addToCart" class="pb-button"/></div>
             </div>
         </div>
     </div>

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,9 +14,9 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "abstract_order_entry")
-public class AbstractOrderEntry {
+public class AbstractOrderEntry implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "pk")
     private int pk;
 
