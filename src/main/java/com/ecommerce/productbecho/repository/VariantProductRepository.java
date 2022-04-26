@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VariantProductRepository extends JpaRepository<VariantProduct, Integer> {
+    VariantProduct findByCode(String code);
 }
