@@ -4,6 +4,7 @@
     <title>Product Becho</title>
 </head>
 <body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <div class="row">
     <div class="col-sm-3 my-2 d-flex align-content-stretch flex-wrap" th:each="product : ${products}">
         <div class="card">
@@ -12,11 +13,15 @@
                 <h5 class="card-title" th:text="${product.name}">Product name</h5>
                 <p class="card-text" th:text="${product.description}">Product summary</p>
                 <p class="card-text" th:text="${product.price}">Product cost</p>
-                <p id="productode" class="card-text" th:text="${product.code}">Product summary</p>
-                <div class="button-container"><input type="button" value="AddToCart" id="addToCart" class="pb-button"/></div>
+                <p id="product-code" class="card-text" th:text="${product.code}">Product summary</p>
+                <div class="button-container">
+                    <input type="button" value="AddToCart" id="addToCart" class="pb-button"/>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<script src="js/addToCart.js">
+</script>
 </body>
 </html>
