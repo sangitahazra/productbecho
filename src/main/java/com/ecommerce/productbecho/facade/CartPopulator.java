@@ -12,13 +12,16 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CartPopulator {
 
     public CartData populate(AbstractOrder abstractOrder) {
         CartData cartData = new CartData();
-        cartData.setCode(abstractOrder.getCart().getCode());
+        if (Objects.nonNull(abstractOrder.getCart())) {
+            cartData.setCode(abstractOrder.getCart().getCode());
+        }
         cartData.setTotal(abstractOrder.getTotalAmount());
         List<CartEntryData> entries = new ArrayList<>();
         if (!CollectionUtils.isEmpty(abstractOrder.getAbstractOrderEntries())) {

@@ -17,6 +17,7 @@ html, body {
 
 .right-container {
   width: 100%;
+  border-right: 1px solid darkgrey;
 }
 
 .header-container {
@@ -111,9 +112,9 @@ appearance: none;
     width: 100%;
 }
 .cart-details {
-    margin-top: 1%;
     padding-left: 3%;
-    border-right: 1px solid darkgrey;
+    margin-top: 3%;
+    padding-right: 8%;
 }
 .entry {
     display: flex;
@@ -128,4 +129,5 @@ appearance: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-left: 5%;
 }
