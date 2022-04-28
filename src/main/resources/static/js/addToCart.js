@@ -6,7 +6,7 @@ $("#addToCart").click(function(e) {
         url: "/addToCart",
         data: {
             code: $("#product-code").text(),
-            quantity: 1
+            quantity: $('#quantity').val()
         },
         success: function(result) {
          alert('ok, redirecting to cart page');
