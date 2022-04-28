@@ -3,8 +3,38 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Product Becho</title>
+    <link rel="stylesheet" th:href="@{/css/pbstyle.css}">
 </head>
 <body>
-This is cart Page
+<div class="main-container">
+    <div class="store-header">
+        <h1 class="logo">Product Becho</h1>
+    </div>
+    <div class="lower-container">
+        <div class="right-container">
+            Shopping Cart
+            <div class="cart-details">
+                <div class="entry" th:each="entry : ${cartdata.entries}">
+                    <div><img th:src="*{'data:image/png;base64,'+entry.product.image}" alt=""/></div>
+                    <div class="product-details">
+                        <div style="margin-top: 2%;" th:text="${entry.product.name}"></div>
+                        <div style="margin-top: 2%;" th:text="${entry.product.description}"></div>
+                        <label style="margin-top: 2%;" th:text="'Price: ' + ${entry.product.price}"></label>
+                        <label style="margin-top: 2%;" th:text="'Quantity:  ' + ${entry.quantity}"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="left-checkout">
+            PRICE DETAILS
+            Total MRP <div th:text="${cartdata.total}"></div>
+            <form action="#" th:action="@{'/checkout'}" th:method="get" >
+                <div class="button-container">
+                    <input type="submit" value="Place Order" class="pb-button"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
