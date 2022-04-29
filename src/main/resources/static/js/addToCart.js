@@ -1,19 +1,18 @@
-$("#addToCart").click(function(e) {
-    alert('called');
+$("#abstract-order-entry button").click(function(e) {
+    var pCode = $(this).closest('#abstract-order-entry').find("#product-code").text();
+    var pQuantity = $(this).closest('#abstract-order-entry').find("#quantity").val();
     e.preventDefault();
-    $.ajax({
-        type: "POST",
-        url: "/addToCart",
-        data: {
-            code: $("#product-code").text(),
-            quantity: $('#quantity').val()
-        },
-        success: function(result) {
-         alert('ok, redirecting to cart page');
-           window.location = "http://localhost:8080/cart";
-        },
-        error: function(result) {
-         alert('error');
-        }
-    });
+        $.ajax({
+            type: "POST",
+            url: "/addToCart",
+            data: {
+                code: pCode,
+                quantity: pQuantity
+            },
+            success: function(result) {
+               window.location = "http://localhost:8080/cart";
+            },
+            error: function(result) {
+            }
+        });
 });
