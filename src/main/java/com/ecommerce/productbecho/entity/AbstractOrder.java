@@ -30,4 +30,15 @@ public class AbstractOrder implements Serializable {
     @OneToOne(mappedBy = "abstractOrder")
     private Cart cart;
 
+    @ManyToOne
+    @JoinColumn(name = "user_pk")
+    private PBUser pbUser;
+
+    @ManyToOne
+    @JoinColumn(name = "address_pk")
+    private Address address;
+
+    @OneToOne(mappedBy = "abstractOrder")
+    private Order order;
+
 }

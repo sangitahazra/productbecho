@@ -16,7 +16,7 @@ public class GuestCheckoutController {
     private PBUserService pbUserService;
 
     @PostMapping("/checkout/guest/add/")
-    public ResponseEntity add(@RequestBody GuestUserData guestUserData) {
+    public ResponseEntity add(@RequestBody GuestUserData guestUserData) throws Exception {
         if (pbUserService.getUser(guestUserData).isEmpty()) {
             pbUserService.addUser(guestUserData);
         }
@@ -24,7 +24,7 @@ public class GuestCheckoutController {
     }
 
     @PostMapping("/checkout/address/add/")
-    public ResponseEntity saveAddress(@RequestBody AddressData addressData) {
+    public ResponseEntity saveAddress(@RequestBody AddressData addressData) throws Exception {
         pbUserService.addAddress(addressData);
         return ResponseEntity.ok().build();
     }

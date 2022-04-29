@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,5 +42,12 @@ public class Address implements Serializable {
 
     @Column(name = "phone")
     private String phone;
+
+    @ManyToOne
+    @JoinColumn(name = "abstract_order_pk")
+    private AbstractOrder abstractOrder;
+
+    @OneToMany(mappedBy = "address")
+    private Set<AbstractOrder> abstractOrders;
 
 }
