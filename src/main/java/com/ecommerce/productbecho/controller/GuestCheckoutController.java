@@ -6,12 +6,16 @@ import com.ecommerce.productbecho.service.OrderService;
 import com.ecommerce.productbecho.service.PBUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@RestController
+import javax.servlet.http.HttpSession;
+
+@Controller
 public class GuestCheckoutController {
 
     @Autowired
@@ -20,7 +24,10 @@ public class GuestCheckoutController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    HttpSession httpSession;
 
+    @ResponseBody
     @PostMapping("/checkout/guest/add/")
     public ResponseEntity add(@RequestBody GuestUserData guestUserData) throws Exception {
         if (pbUserService.getUser(guestUserData).isEmpty()) {
@@ -29,20 +36,25 @@ public class GuestCheckoutController {
         return ResponseEntity.ok().build();
     }
 
+    @ResponseBody
     @PostMapping("/checkout/address/add/")
     public ResponseEntity saveAddress(@RequestBody AddressData addressData) throws Exception {
         pbUserService.addAddress(addressData);
         return ResponseEntity.ok().build();
     }
 
+    @ResponseBody
     @PostMapping("/checkout/payment/add/")
     public ResponseEntity placeOrder() throws Exception {
         orderService.placeOrder();
         return ResponseEntity.ok().build();
     }
 
+
     @GetMapping("/checkout/success")
-    public String orderSuccess() {
+    public String orderSuccess(Model model) {
+        String orderCode = (String) httpSession.getAttribute("orderCode");
+        model.addAttribute("orderCode", orderCode);
         return "order-success";
     }
 }

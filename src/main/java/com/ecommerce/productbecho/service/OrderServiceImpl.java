@@ -2,7 +2,6 @@ package com.ecommerce.productbecho.service;
 
 import com.ecommerce.productbecho.entity.AbstractOrder;
 import com.ecommerce.productbecho.entity.Order;
-import com.ecommerce.productbecho.repository.AbstractOrderRepository;
 import com.ecommerce.productbecho.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +16,8 @@ public class OrderServiceImpl implements OrderService {
     HttpSession httpSession;
 
     @Autowired
-    AbstractOrderRepository abstractOrderRepository;
-
-    @Autowired
     OrderRepository orderRepository;
+
 
     @Override
     public Order placeOrder() throws Exception {
@@ -29,7 +26,9 @@ public class OrderServiceImpl implements OrderService {
             Order order = new Order();
             order.setAbstractOrder(abstractOrder);
             order.setCode(UUID.randomUUID().toString());
-            return orderRepository.save(order);
+            Order orderEntity =  orderRepository.save(order);
+            httpSession.setAttribute("orderCode", orderEntity.getCode());
+            return orderEntity;
         }
         else throw new Exception();
     }
