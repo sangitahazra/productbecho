@@ -6,7 +6,8 @@ $("#guest-next").click(function(e) {
         contentType: 'application/json',
         data: JSON.stringify({
             "email": $("#guest-details #email").val(),
-            "phone": $("#guest-details #phone").val()
+            "phone": $("#guest-details #phone").val(),
+            "name": $("#guest-details #name").val(),
         }),
         success: function(result) {
             $("#guest-details").addClass("hide");

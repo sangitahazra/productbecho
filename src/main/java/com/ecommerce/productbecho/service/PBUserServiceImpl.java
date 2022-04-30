@@ -31,10 +31,11 @@ public class PBUserServiceImpl implements PBUserService{
     AbstractOrderRepository abstractOrderRepository;
 
     @Override
-    public void addUser(final GuestUserData guestUserData) throws Exception {
+    public PBUser addUser(final GuestUserData guestUserData) throws Exception {
         PBUser pbUser = new PBUser();
         pbUser.setUserName(guestUserData.getEmail());
         pbUser.setPhone(guestUserData.getPhone());
+        pbUser.setName(guestUserData.getName());
         pbUser.setRole("GUEST");
         PBUser pbUserEntity = userRepository.save(pbUser);
         AbstractOrder abstractOrder = (AbstractOrder) httpSession.getAttribute("abstractOrder");
@@ -42,6 +43,7 @@ public class PBUserServiceImpl implements PBUserService{
             abstractOrder.setPbUser(pbUserEntity);
             AbstractOrder abstractOrderEntity = abstractOrderRepository.save(abstractOrder);
             httpSession.setAttribute("abstractOrder", abstractOrderEntity);
+            return pbUserEntity;
         }
         else throw new Exception();
     }
