@@ -40,3 +40,17 @@ $("#shipping-next").click(function(e) {
         }
     });
 });
+
+$("#payment-next").click(function(e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "/checkout/payment/add/",
+        contentType: 'application/json',
+        success: function(result) {
+            window.location = "http://localhost:8080/checkout/success";
+        },
+        error: function(result) {
+        }
+    });
+});

@@ -3,6 +3,7 @@ package com.ecommerce.productbecho.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "cart")
-public class Cart {
+public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "pk")
@@ -19,7 +20,7 @@ public class Cart {
     @Column(name = "code")
     private String code;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "abstract_order_pk")
     private AbstractOrder abstractOrder;
 }

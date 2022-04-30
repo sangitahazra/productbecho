@@ -28,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
         if(null != abstractOrder) {
             Order order = new Order();
             order.setAbstractOrder(abstractOrder);
-            order.setOrderCode(UUID.randomUUID().toString());
+            order.setCode(UUID.randomUUID().toString());
             return orderRepository.save(order);
         }
         else throw new Exception();

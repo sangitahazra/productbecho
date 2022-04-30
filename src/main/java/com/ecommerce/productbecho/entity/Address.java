@@ -43,10 +43,6 @@ public class Address implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @ManyToOne
-    @JoinColumn(name = "abstract_order_pk")
-    private AbstractOrder abstractOrder;
-
     @OneToMany(mappedBy = "address")
     private Set<AbstractOrder> abstractOrders;
 
