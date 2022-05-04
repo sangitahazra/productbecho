@@ -149,3 +149,23 @@ appearance: none;
 .material-icons {
     color: #0DB776;
 }
+
+
+.pb-button-view-cart {
+                   appearance: none;
+                       background-color: #8080ff;
+                       border: 1px solid rgba(27, 31, 35, .15);
+                       border-radius: 6px;
+                       box-shadow: rgb(27 31 35 / 10%) 0 1px 0;
+                       box-sizing: border-box;
+                       color:  #fff;
+                       display: inline-block;
+                       font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+                       font-size: 14px;
+                       font-weight: 600;
+                       line-height: 20px;
+                       padding: 7px 27px;
+                       position: relative;
+                       text-align: center;
+                       text-decoration: none;
+}

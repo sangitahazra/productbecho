@@ -44,6 +44,12 @@
                         </select>
                         <br><br>
                         <button th:id="'addToCart'+ ${iter.index}" class="pb-button" >AddToCart</button>
+                        <div th:id="'targetaddToCart'+ ${iter.index}" class="hide">
+                            <form action="http://localhost:8080/cart">
+                                <input class="pb-button-view-cart" type="submit" value="View Cart" />
+                                <button th:id="'addToCart'+ ${iter.index}" class="pb-button" >Add More Quantity</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

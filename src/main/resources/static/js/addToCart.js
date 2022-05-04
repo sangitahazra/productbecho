@@ -1,6 +1,7 @@
 $("#abstract-order-entry button").click(function(e) {
     var pCode = $(this).closest('#abstract-order-entry').find("#product-code").text();
     var pQuantity = $(this).closest('#abstract-order-entry').find("#quantity").val();
+    var buttonId = $(this).attr('id');
     e.preventDefault();
         $.ajax({
             type: "POST",
@@ -10,7 +11,8 @@ $("#abstract-order-entry button").click(function(e) {
                 quantity: pQuantity
             },
             success: function(result) {
-               window.location = "http://localhost:8080/cart";
+              $("#" + buttonId).hide();
+               $("#target" + buttonId).show();
             },
             error: function(result) {
             }
