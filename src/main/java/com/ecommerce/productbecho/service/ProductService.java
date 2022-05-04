@@ -5,9 +5,11 @@ import form.Product;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 
 public interface ProductService {
     void uploadProduct(Product product, MultipartFile file) throws IOException;
-    List<ProductDTO> getAllProducts();
+    Set<ProductDTO> getAllProducts();
+
+    Set<ProductDTO> findByKey(String key);
 }

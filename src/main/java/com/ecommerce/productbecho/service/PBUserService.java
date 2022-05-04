@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface PBUserService {
 
-    void addUser(GuestUserData guestUserData);
+    PBUser addUser(GuestUserData guestUserData) throws Exception;
 
     Optional<PBUser> getUser(GuestUserData guestUserData);
 
-    void addAddress(AddressData addressData);
+    void addAddress(AddressData addressData) throws Exception;
 }

@@ -1,14 +1,17 @@
 package com.ecommerce.productbecho.service;
 
+import com.ecommerce.productbecho.entity.AbstractOrder;
 import com.ecommerce.productbecho.entity.Address;
 import com.ecommerce.productbecho.entity.PBUser;
 import com.ecommerce.productbecho.pojo.AddressData;
 import com.ecommerce.productbecho.pojo.GuestUserData;
+import com.ecommerce.productbecho.repository.AbstractOrderRepository;
 import com.ecommerce.productbecho.repository.AddressRepository;
 import com.ecommerce.productbecho.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -21,13 +24,28 @@ public class PBUserServiceImpl implements PBUserService{
     @Autowired
     AddressRepository addressRepository;
 
+    @Autowired
+    HttpSession httpSession;
+
+    @Autowired
+    AbstractOrderRepository abstractOrderRepository;
+
     @Override
-    public void addUser(final GuestUserData guestUserData) {
+    public PBUser addUser(final GuestUserData guestUserData) throws Exception {
         PBUser pbUser = new PBUser();
         pbUser.setUserName(guestUserData.getEmail());
         pbUser.setPhone(guestUserData.getPhone());
+        pbUser.setName(guestUserData.getName());
         pbUser.setRole("GUEST");
-        userRepository.save(pbUser);
+        PBUser pbUserEntity = userRepository.save(pbUser);
+        AbstractOrder abstractOrder = (AbstractOrder) httpSession.getAttribute("abstractOrder");
+        if(null != abstractOrder) {
+            abstractOrder.setPbUser(pbUserEntity);
+            AbstractOrder abstractOrderEntity = abstractOrderRepository.save(abstractOrder);
+            httpSession.setAttribute("abstractOrder", abstractOrderEntity);
+            return pbUserEntity;
+        }
+        else throw new Exception();
     }
 
     @Override
@@ -42,7 +60,7 @@ public class PBUserServiceImpl implements PBUserService{
     }
 
     @Override
-    public void addAddress(final AddressData addressData) {
+    public void addAddress(final AddressData addressData) throws Exception {
         Address address = new Address();
         address.setCity(addressData.getCity());
         address.setLine1(addressData.getLine1());
@@ -51,6 +69,13 @@ public class PBUserServiceImpl implements PBUserService{
         address.setState(addressData.getState());
         address.setZip(addressData.getZip());
         address.setPhone(addressData.getPhone());
-        addressRepository.save(address);
+        Address addressEntity = addressRepository.save(address);
+        AbstractOrder abstractOrder = (AbstractOrder) httpSession.getAttribute("abstractOrder");
+        if(null != abstractOrder) {
+            abstractOrder.setAddress(addressEntity);
+            AbstractOrder abstractOrderEntity = abstractOrderRepository.save(abstractOrder);
+            httpSession.setAttribute("abstractOrder", abstractOrderEntity);
+        }
+        else throw new Exception();
     }
 }

@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 
 @Service
@@ -43,14 +41,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> getAllProducts() {
+    public Set<ProductDTO> getAllProducts() {
         List<VariantProduct> variantProductList = variantProductRepository.findAll();
-        List<ProductDTO> products = new ArrayList<>();
+        Set<ProductDTO> products = new HashSet<>();
         variantProductList.forEach(populateProductDetails(products));
         return products;
     }
 
-    private Consumer<VariantProduct> populateProductDetails(List<ProductDTO> products) {
+    @Override
+    public Set<ProductDTO> findByKey(String key) {
+        Set<VariantProduct> variantProductSet = variantProductRepository.findByKey(key, key, key);
+        Set<ProductDTO> products = new HashSet<>();
+        variantProductSet.forEach(populateProductDetails(products));
+        return products;
+    }
+
+    private Consumer<VariantProduct> populateProductDetails(Set<ProductDTO> products) {
         return variantProduct -> {
             String image = Base64.getEncoder().encodeToString(variantProduct.getImage());
             ProductDTO productDTO = new ProductDTO();

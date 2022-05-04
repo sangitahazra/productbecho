@@ -1,9 +1,7 @@
 package com.ecommerce.productbecho.controller;
 
-import com.ecommerce.productbecho.entity.AbstractOrder;
 import com.ecommerce.productbecho.entity.Cart;
 import com.ecommerce.productbecho.facade.CartPopulator;
-import com.ecommerce.productbecho.repository.AbstractOrderRepository;
 import com.ecommerce.productbecho.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

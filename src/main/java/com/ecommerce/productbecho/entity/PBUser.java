@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,5 +30,11 @@ public class PBUser implements Serializable {
 
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "name")
+    private String name;
+
+    @OneToMany(mappedBy = "pbUser")
+    private Set<AbstractOrder> abstractOrders;
 
 }

@@ -6,7 +6,8 @@ $("#guest-next").click(function(e) {
         contentType: 'application/json',
         data: JSON.stringify({
             "email": $("#guest-details #email").val(),
-            "phone": $("#guest-details #phone").val()
+            "phone": $("#guest-details #phone").val(),
+            "name": $("#guest-details #name").val(),
         }),
         success: function(result) {
             $("#guest-details").addClass("hide");
@@ -35,6 +36,20 @@ $("#shipping-next").click(function(e) {
         success: function(result) {
             $("#shipping-details").addClass("hide");
             $("#payment-details").removeClass("hide");
+        },
+        error: function(result) {
+        }
+    });
+});
+
+$("#payment-next").click(function(e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "/checkout/payment/add/",
+        contentType: 'application/json',
+        success: function(result) {
+            window.location = "http://localhost:8080/checkout/success";
         },
         error: function(result) {
         }
