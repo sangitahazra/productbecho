@@ -28,10 +28,10 @@ public class HomePageController {
 
     @ResponseBody
     @GetMapping("/findProduct")
-    public ResponseEntity findProduct(@RequestParam("key") String key, Model model) {
+    public String findProduct(@RequestParam("key") String key, Model model) {
         Set<ProductDTO> products = productService.findByKey(key);
         model.addAttribute("products", products);
-        return ResponseEntity.ok().build();
+        return "search-result";
     }
 
 
