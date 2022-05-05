@@ -26,7 +26,6 @@ public class HomePageController {
         return "view-products";
     }
 
-    @ResponseBody
     @GetMapping("/findProduct")
     public String findProduct(@RequestParam("key") String key, Model model) {
         Set<ProductDTO> products = productService.findByKey(key);

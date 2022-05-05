@@ -19,19 +19,19 @@ $("#abstract-order-entry button").click(function(e) {
         });
 });
 
-$("#searchtextboxButton").click(function(e) {
-    var key = $("#searchtextbox").val();
-    e.preventDefault();
-        $.ajax({
-            type: "GET",
-            url: "/findProduct",
-            data: {
-                key: key
-            },
-            success: function(result) {
-                window.location = "http://localhost:8080/searchResultsPage";
-            },
-            error: function(result) {
-            }
-        });
-});
+//$("#searchtextboxButton").click(function(e) {
+//    var key = $("#searchtextbox").val();
+//    e.preventDefault();
+//        $.ajax({
+//            type: "GET",
+//            url: "/findProduct",
+//            data: {
+//                key: key
+//            },
+//            success: function(result) {
+//                window.location = "http://localhost:8080/searchResultsPage";
+//            },
+//            error: function(result) {
+//            }
+//        });
+//});
