@@ -4,6 +4,7 @@ import com.ecommerce.productbecho.entity.PBUser;
 import com.ecommerce.productbecho.pojo.AddressData;
 import com.ecommerce.productbecho.pojo.GuestUserData;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PBUserService {
@@ -13,4 +14,6 @@ public interface PBUserService {
     Optional<PBUser> getUser(GuestUserData guestUserData);
 
     void addAddress(AddressData addressData) throws Exception;
+
+    List<PBUser> findAllUsers();
 }

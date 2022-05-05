@@ -1,9 +1,11 @@
 package com.ecommerce.productbecho.controller;
 
+import com.ecommerce.productbecho.entity.AbstractOrder;
 import com.ecommerce.productbecho.entity.PBUser;
 import com.ecommerce.productbecho.event.OnOrderConfirmationEvent;
 import com.ecommerce.productbecho.pojo.AddressData;
 import com.ecommerce.productbecho.pojo.GuestUserData;
+import com.ecommerce.productbecho.repository.AbstractOrderRepository;
 import com.ecommerce.productbecho.service.OrderService;
 import com.ecommerce.productbecho.service.PBUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,10 @@ public class GuestCheckoutController {
     @Autowired
     private MessageSource messages;
 
+
+    @Autowired
+    private AbstractOrderRepository abstractOrderRepository;
+
     @ResponseBody
     @PostMapping("/checkout/guest/add/")
     public ResponseEntity add(@RequestBody GuestUserData guestUserData) throws Exception {
@@ -47,6 +53,12 @@ public class GuestCheckoutController {
             pbUserEntity = pbUserService.addUser(guestUserData);
         } else {
             pbUserEntity = pbUser.get();
+        }
+        AbstractOrder abstractOrder = (AbstractOrder) httpSession.getAttribute("abstractOrder");
+        if(null != abstractOrder) {
+            abstractOrder.setPbUser(pbUserEntity);
+            AbstractOrder abstractOrderEntity = abstractOrderRepository.save(abstractOrder);
+            httpSession.setAttribute("abstractOrder", abstractOrderEntity);
         }
         httpSession.setAttribute("user", pbUserEntity);
         return ResponseEntity.ok().build();
