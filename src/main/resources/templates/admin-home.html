@@ -3,25 +3,58 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Product Becho</title>
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" th:href="@{/css/admin-panel.css}">
 </head>
 <body>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<span th:if="${uploaded}"><p>Product uploaded </p></span>
-<span th:unless="${uploaded}">
-    <form action="#" th:action="@{/backoffice/add-product}" th:object="${product}" enctype="multipart/form-data" method="post">
-        <p>Product Code: <input type="text" th:field="*{code}" /></p>
-        <p>Description: <input type="text" th:field="*{description}" /></p>
-        <p>Name: <input type="text" th:field="*{name}" /></p>
-        <p>Price: <input type="text" th:field="*{price}" /></p>
-        <p>Image: <input type="file" th:name="imageFile" /></p>
-        <p>Warehouse: <input type="text" th:field="*{warehouse}" /></p>
-        <p>Quantity: <input type="text" th:field="*{quantity}" /></p>
-        <p>Price: <input type="text" th:field="*{price}" /></p>
-        <p><input type="submit" value="Submit" /></p>
-    </form>
-</span>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<div class="admin-container">
+    <div class="left-admin-panel">
+        <div class="admin-user" th:inline="text">
+            <div class="admin-user-details">
+                <span class="material-symbols-outlined">
+                    person
+                </span>
+                [[${#httpServletRequest.remoteUser}]]
+            </div>
+            <span class="material-symbols-outlined logout-admin" id="logout-admin">
+                logout
+            </span>
+            <form th:action="@{/logout}" method="post" id="logout-admin-form">
+            </form>
+        </div>
+        <div class="admin-menu">
+            <div class="line"><hr></div>
+            <div class="menu-item">
+                <span class="material-symbols-outlined material-item">
+                    home
+                </span>
+                <div class="item-desc" id="dashboard"> Dashboard</div>
+            </div>
+            <div class="line"><hr></div>
+            <div class="menu-item">
+                <span class="material-symbols-outlined material-item">
+                    add_circle
+                </span>
+                <div class="item-desc" id="add-product-container"> Add Product</div>
+            </div>
+            <div class="line"><hr></div>
+        </div>
+    </div>
+    <div class="right-admin-panel">
+        <div id="admin-panel-content" class="admin-panel-content">
+            <div class="dashboard">
+                <div class="dashboard-block">
+                    <div class="text-dashboard-desc"> Total Orders</div> <div th:text="${totalOrders}" class="text-dashboard"></div>
+                </div>
+                <div class="dashboard-block"><div class="text-dashboard-desc">Revenue</div> <div th:text="${revenue}" class="text-dashboard"></div></div>
+                <div class="dashboard-block"><div class="text-dashboard-desc">Users</div> <div th:text="${users}" class="text-dashboard"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" th:src="@{/js/admin.js}"></script>
 </body>
 </html>

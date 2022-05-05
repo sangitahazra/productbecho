@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -77,5 +78,10 @@ public class PBUserServiceImpl implements PBUserService{
             httpSession.setAttribute("abstractOrder", abstractOrderEntity);
         }
         else throw new Exception();
+    }
+
+    @Override
+    public List<PBUser> findAllUsers() {
+        return userRepository.findAll();
     }
 }

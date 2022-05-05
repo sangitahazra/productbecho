@@ -1,0 +1,163 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Whitney,Helvetica,Arial,sans-serif!important;
+}
+.admin-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.left-admin-panel {
+    width: 15%;
+    border-right: 1px solid #063970;
+    height: 100%;
+    background-color: #063970;
+    color: #eeeee4;
+    text-align: center;
+}
+.right-admin-panel {
+    width: 90%;
+}
+
+.admin-user {
+    border-bottom: 1px solid;
+    display: flex;
+    margin-top: 2%;
+    padding-bottom: 5%;
+}
+
+.logout-admin {
+    padding-left: 20%;
+}
+
+.admin-user-details {
+    padding-right: 20%;
+}
+
+.admin-menu {
+    margin-top: 40%;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: center;
+}
+
+.material-item {
+    padding-right: 10%;
+}
+
+.item-desc {
+    padding-right: 20%;
+}
+
+.line {
+    width: 90%;
+    padding-left: 5%;
+}
+
+.admin-panel-content {
+    margin-top: 10%;
+}
+
+.pb-input {
+        border: 1px solid darkgrey;
+        outline: 0;
+        padding: 8px;
+        font-size: 1rem;
+        border-radius: 8px;
+}
+
+.input-container {
+    display: flex;
+    margin-bottom: 1%;
+}
+
+.description {
+    padding-right: 5%;
+    margin-top: 1%;
+    padding-left: 2%;
+    width: 15%;
+}
+
+.input-box {
+    padding-right: 65%;
+}
+
+.text-area {
+    height: 70%;
+    margin-bottom: 40%;
+}
+
+.image-file {
+    padding-left: 15%;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.pb-button {
+appearance: none;
+    background-color: #063970;
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 6px;
+    box-shadow: rgb(27 31 35 / 10%) 0 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    display: inline-block;
+    font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 7px 27px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
+
+.success-msg {
+    display: flex;
+    justify-content: center;
+    background-color: mediumseagreen;
+    color: floralwhite;
+}
+
+#hideAfter5Seconds {
+  animation: hideAnimation 0s ease-in 3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes hideAnimation {
+  to {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+}
+
+.dashboard-block {
+border: 1px solid #E8E9EB;
+    border-radius: 10%;
+    width: 100px;
+    height: 100px;
+    margin-left: 20px;
+    background-color: #E8E9EB;
+    color: navy;
+}
+
+.dashboard {
+    display: flex;
+    justify-content: space-around;
+}
+
+.text-dashboard {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.text-dashboard-desc {
+    text-align: center;
+    margin-top: 5px;
+}
