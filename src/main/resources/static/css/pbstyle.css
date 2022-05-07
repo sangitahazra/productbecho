@@ -169,3 +169,13 @@ appearance: none;
                        text-align: center;
                        text-decoration: none;
 }
+
+.searchBox {
+    margin-left: 35%;
+    width: 30%;
+}
+.searchtextboxButtonClass {
+
+    color: white;
+    background: green;
+}
