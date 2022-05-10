@@ -6,24 +6,50 @@
 <body>
 <div class="main-container">
     <div class="store-header" th:include="fragments/header :: header"/>
+    <div class="breadcrumb">
+        <div><span class="material-symbols-outlined">home</span></div>
+        <div class="breadcrumb-text"><a href="/">Home</a></div>
+        <div><span class="material-symbols-outlined">
+            chevron_right</span>
+        </div>
+        <div class="breadcrumb-text">Cart</div>
+    </div>
     <div class="lower-container">
         <div class="right-container">
-            Shopping Cart
+            <h1 class="">Shopping Cart</h1>
             <div class="cart-details">
                 <div class="entry" th:each="entry : ${cartdata.entries}">
                     <div><img th:src="*{'data:image/png;base64,'+entry.product.image}" alt=""/></div>
                     <div class="product-details">
-                        <div style="margin-top: 2%;" th:text="${entry.product.name}"></div>
-                        <div style="margin-top: 2%;" th:text="${entry.product.description}"></div>
-                        <label style="margin-top: 2%;" th:text="'Price: ' + ${entry.product.price}"></label>
-                        <label style="margin-top: 2%;" th:text="'Quantity:  ' + ${entry.quantity}"></label>
+                        <div th:text="${entry.product.name}"></div>
+                        <div th:text="${entry.product.description}"></div>
+                        <label th:text="'Price: ' + ${entry.product.price}"></label>
+                        <label th:text="'Quantity:  ' + ${entry.quantity}"></label>
+                    </div>
+                    <div><span class="material-symbols-outlined">delete</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="left-checkout">
-            PRICE DETAILS
-            Total MRP <div th:text="${cartdata.total}"></div>
+            <div class="order-review">
+                <div> <h4>PRICE DETAILS</h4></div>
+                <div class="order-review-items">
+                    <div>Product Cost</div>
+                    <div th:text="${cartdata.total}"></div>
+                </div>
+                <div class="order-review-items">
+                    <div>Shipping Cost</div>
+                    <div>0.0</div>
+                </div>
+                <div class="order-review-items">
+                    <div>Discount</div>
+                    <div> - 0.0</div>
+                </div>
+                <div class="order-review-items">
+                    <div>Order Total</div> <div th:text="${cartdata.total}"></div>
+                </div>
+            </div>
             <form action="#" th:action="@{'/checkout'}" th:method="get" >
                 <div class="button-container">
                     <input type="submit" value="Place Order" class="pb-button"/>
