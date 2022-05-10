@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<body>
+<div th:fragment="header">
+    <div class="logo">Product Becho</div>
+    <form action="/findProduct" method="GET" id="search-box-form">
+        <div class="search-box">
+            <div>
+                <input type="text" id="searchtextbox" value="" name="key" autocomplete="off" placeholder=""
+                       class="searchBox" aria-label="Search">
+            </div>
+            <div class="material-symbols-outlined search-box-icon" id="search-box-icon">
+                search
+            </div>
+        </div>
+    </form>
+    <div class="cartIconAndCount" id="cart-icon-count">
+        <a href="/cart" aria-label="Cart" class="cartIcon" id="cartIcon">
+            <i id="shoppingcarticon" class="material-icons">shopping_cart</i>
+        </a>
+    </div>
+</div>
+</body>
+</html>

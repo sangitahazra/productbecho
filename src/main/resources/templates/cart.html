@@ -1,32 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Product Becho</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" th:href="@{/css/pbstyle.css}">
+<head th:include="fragments/head :: head">
 </head>
 <body>
 <div class="main-container">
-    <div class="store-header">
-        <div class="logo">Product Becho</div>
-        <form action="/findProduct" method="GET" id="search-box-form">
-            <div class="search-box">
-                <div>
-                    <input type="text" id="searchtextbox" value="" name="key" autocomplete="off" placeholder=""
-                           class="searchBox" aria-label="Search">
-                </div>
-                <div class="material-symbols-outlined search-box-icon" id="search-box-icon">
-                    search
-                </div>
-            </div>
-        </form>
-        <div class="cartIconAndCount" id="cart-icon-count" >
-            <a href="/cart" aria-label="Cart" class="cartIcon" id="cartIcon">
-                <i id="shoppingcarticon" class="material-icons">shopping_cart</i>
-            </a>
-        </div>
-    </div>
+    <div class="store-header" th:include="fragments/header :: header"/>
     <div class="lower-container">
         <div class="right-container">
             Shopping Cart

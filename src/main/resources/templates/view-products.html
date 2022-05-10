@@ -1,34 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <title>Product Becho</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" th:href="@{/css/pbstyle.css}">
+<head th:include="fragments/head :: head">
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <div class="main-container">
-    <div class="store-header">
-        <div class="logo">Product Becho</div>
-            <form action="/findProduct" method="GET" id="search-box-form">
-                <div class="search-box">
-                    <div>
-                        <input type="text" id="searchtextbox" value="" name="key" autocomplete="off" placeholder=""
-                               class="searchBox" aria-label="Search">
-                    </div>
-                    <div class="material-symbols-outlined search-box-icon" id="search-box-icon">
-                        search
-                    </div>
-                </div>
-            </form>
-        <div class="cartIconAndCount" id="cart-icon-count">
-            <a href="/cart" aria-label="Cart" class="cartIcon" id="cartIcon">
-                <i id="shoppingcarticon" class="material-icons">shopping_cart</i>
-            </a>
-        </div>
-    </div>
+    <div class="store-header" th:include="fragments/header :: header"/>
     <div class="all-products-container">
         <div th:each="product,iter : ${products}">
             <div class="product-card" id="abstract-order-entry">
