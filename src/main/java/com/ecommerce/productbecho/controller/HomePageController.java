@@ -17,6 +17,11 @@ public class HomePageController {
     @Autowired
     ProductService productService;
 
+    @GetMapping("/")
+    public String home(Model model) {
+        return "home-page";
+    }
+
     @GetMapping("/getAllProducts")
     public String getAllProducts(Model model) {
         Set<ProductDTO> products = productService.getAllProducts();
