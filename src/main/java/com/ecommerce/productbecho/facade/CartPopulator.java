@@ -4,7 +4,6 @@ import com.ecommerce.productbecho.dto.CartData;
 import com.ecommerce.productbecho.dto.CartEntryData;
 import com.ecommerce.productbecho.dto.ProductDTO;
 import com.ecommerce.productbecho.entity.AbstractOrder;
-import com.ecommerce.productbecho.entity.AbstractOrderEntry;
 import com.ecommerce.productbecho.entity.VariantProduct;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
