@@ -12,4 +12,6 @@ public interface ProductService {
     Set<ProductDTO> getAllProducts();
 
     Set<ProductDTO> findByKey(String key);
+
+    public String populateOrderDetails();
 }

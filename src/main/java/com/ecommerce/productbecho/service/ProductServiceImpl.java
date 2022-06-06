@@ -1,15 +1,16 @@
 package com.ecommerce.productbecho.service;
 
 import com.ecommerce.productbecho.dto.ProductDTO;
-import com.ecommerce.productbecho.entity.Stock;
-import com.ecommerce.productbecho.entity.VariantProduct;
-import com.ecommerce.productbecho.repository.StockRepository;
-import com.ecommerce.productbecho.repository.VariantProductRepository;
+import com.ecommerce.productbecho.entity.*;
+import com.ecommerce.productbecho.repository.*;
 import form.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
@@ -22,6 +23,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     StockRepository stockRepository;
+
+    @Autowired
+    HttpSession httpSession;
+
+    @Autowired
+    OrderRepository orderRepository;
+
+    @Autowired
+    AbstractOrderRepository abstractOrderRepository;
+
+    @Autowired
+    AbstractOrderEntryRepository abstractOrderEntryRepository;
 
     @Override
     public void uploadProduct(Product product, MultipartFile file) throws IOException {
@@ -68,4 +81,28 @@ public class ProductServiceImpl implements ProductService {
             products.add(productDTO);
         };
     }
+
+    public String populateOrderDetails() {
+        String orderCode = (String) httpSession.getAttribute("orderCode");
+        String addressDetails = "";
+        StringBuilder orderDetails = new StringBuilder();
+        Order order = orderRepository.findByCode(orderCode);
+        if(order != null) {
+            AbstractOrder abstractOrder =order.getAbstractOrder();
+            Address address = abstractOrder.getAddress();
+            addressDetails = address.getName() + ", " + address.getLine1() + " " + address.getLine2()
+                    + " " + address.getCity() + " " + address.getState() + " PIN: " + address.getZip() +
+                    " Contact: "+ address.getPhone();
+            for(AbstractOrderEntry abstractOrderEntry : abstractOrder.getAbstractOrderEntries()) {
+                orderDetails.append("Product code: " + abstractOrderEntry.getVariantProduct().getCode());
+                orderDetails.append("\n  Quantity: " + abstractOrderEntry.getQuantity());
+                orderDetails.append("\n \n");
+            }
+            return orderDetails.toString() + "\n \n \n" + "Address: " + addressDetails;
+        }
+        return orderDetails.toString() + "\n \n \n" + "Address: " + addressDetails;
+    }
+
+
+
 }
