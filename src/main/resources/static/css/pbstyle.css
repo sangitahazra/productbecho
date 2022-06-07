@@ -265,6 +265,7 @@ display: flex;
 .order-review {
     height: 300px;
     width: 300px;
+    margin-left: 5%;
 }
 
 .order-review-items {
