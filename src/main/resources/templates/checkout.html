@@ -117,7 +117,29 @@
             </div>
         </div>
         <div class="left-checkout">
-                total
+            <div class="order-review">
+                <div> <h4>PRICE DETAILS</h4></div>
+                <div class="order-review-items">
+                    <div>Product Cost</div>
+                    <div th:text="${cartdata.total}"></div>
+                </div>
+                <div class="order-review-items">
+                    <div>Shipping Cost</div>
+                    <div>0.0</div>
+                </div>
+                <div class="order-review-items">
+                    <div>Discount</div>
+                    <div> - 0.0</div>
+                </div>
+                <div class="order-review-items">
+                    <div>Order Total</div> <div th:text="${cartdata.total}"></div>
+                </div>
+            </div>
+            <form action="#" th:action="@{'/checkout'}" th:method="get" >
+                <div class="button-container">
+                    <input type="submit" value="Place Order" class="pb-button"/>
+                </div>
+            </form>
         </div>
     </div>
 </div>
