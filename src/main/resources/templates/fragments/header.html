@@ -2,7 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <body>
 <div th:fragment="header">
-    <div class="logo">Product Becho</div>
+    <a href="/">
+    <div class="logo">
+        <div class="logo-img"><img src="https://5.imimg.com/data5/UM/AA/MY-20411371/power-nucleus-india-private-limited-120x120.png"/></div>
+        <div class="logo-text">Power Nucleus India Private Limited</div>
+    </div>
+    </a>
     <form action="/findProduct" method="GET" id="search-box-form">
         <div class="search-box">
             <div>
