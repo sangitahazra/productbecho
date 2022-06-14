@@ -45,16 +45,17 @@ html, body {
 }
 .logo {
     color: #0DB776;
-    margin-top: 8px;
     padding-left: 10px;
     width: 90%;
-    display: block;
-    font-size: 2em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
+    display: flex;
+}
+
+.logo-text {
+    margin-top: 30px;
+    font-size: 1.2em;
     font-weight: bold;
 }
+
 .right-container {
     flex: 0 0 70%;
     padding-left: 10px;
@@ -140,9 +141,8 @@ appearance: none;
 }
 
 .cartIconAndCount {
-    height: 50%;
-    padding-top: 1%;
-    padding-left: 5%;
+    padding-right: 30px;
+    margin-top: 25px;
 }
 
 .material-icons {
@@ -187,7 +187,8 @@ appearance: none;
     width: 200px;
     border-width: thin;
     display: flex;
-    margin-top: 10px;
+    margin-top: 25px;
+    padding-right: 70px;
 }
 
 .search-box-icon {
@@ -277,4 +278,18 @@ display: flex;
 
 .order-review-items > div {
     width: 150px;
+}
+
+.logo-img > img {
+    width: 75px;
+    height: 75px;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+.store-header > a {
+    color: inherit;
+    width: inherit;
 }
